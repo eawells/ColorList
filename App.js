@@ -3,7 +3,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native';
 
 export default class App extends React.Component {
@@ -22,15 +23,16 @@ export default class App extends React.Component {
     const { backgroundColor } = this.state
     return (
       <View style={[styles.container,{backgroundColor}]}>
-        <Text style={styles.button} onPress={() => this.changeColor('red')}>
-        Red
-        </Text>
-        <Text style={styles.button} onPress={() => this.changeColor('green')}>
-        Green
-        </Text>
-        <Text style={styles.button} onPress={() => this.changeColor('blue')}>
-        Blue
-        </Text>
+
+        <TouchableHighlight style={styles.button}
+          onPress={() => this.changeColor('yellow')}
+          underlayColor='orange'>
+          <View style={styles.row}>
+            <View style={[styles.sample, {backgroundColor: 'yellow'}]}/>
+            <Text style={styles.text}>yellow</Text>
+          </View>
+        </TouchableHighlight>
+
       </View>
     )
   }
@@ -44,13 +46,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   button: {
-    fontSize: 30,
     margin: 10,
     padding: 10,
     borderWidth: 2,
     borderRadius: 10,
     alignSelf: 'stretch',
-    textAlign: 'center'
-
+    backgroundColor: 'rgba(255,255,255,.8)'
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  sample: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    margin: 5,
+    backgroundColor: 'white'
+  },
+  text: {
+    fontSize: 30,
+    margin: 5
   }
 })
