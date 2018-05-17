@@ -2,30 +2,25 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
-  ListView,
-  Text
+  ListView
 } from 'react-native';
 
 import ColorButton from './components/ColorButton'
+import ColorForm from  './components/ColorForm'
 
 export default class App extends React.Component {
   constructor() {
     super()
 
     this.ds = new ListView.DataSource({
+      //this fuction determines when the row should be re-rendered (returns true if should be re-rendered)
+      //In this case, it's re-rendered whenever the new row is different from the old one
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     const availableColors = [
       'red',
-      'orange',
       'yellow',
-      'green',
-      'blue',
-      'blueviolet',
-      'purple',
-      'pink',
-      'white',
-      'black'
+      'blue'
     ]
 
     this.state = {
@@ -34,11 +29,24 @@ export default class App extends React.Component {
       dataSource: this.ds.cloneWithRows(availableColors)
     }
     this.changeColor = this.changeColor.bind(this)
+    this.newColor = this.newColor.bind(this)
   }
 
   changeColor(backgroundColor) {
     this.setState({backgroundColor})
   }
+
+  newColor(color) {
+    const availableColors = [
+      ...this.state.availableColors,
+      color
+    ]
+    this.setState({
+      availableColors,
+      dataSource: this.ds.cloneWithRows(availableColors)
+    })
+  }
+
   render() {
     const { backgroundColor, dataSource } = this.state
     return (
@@ -49,7 +57,7 @@ export default class App extends React.Component {
           onSelect={this.changeColor}/>
         )}
         renderHeader={() => (
-          <Text style={styles.header}>Color List</Text>
+          <ColorForm onNewColor={this.newColor}/>
         )}>
 
       </ListView>
