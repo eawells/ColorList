@@ -5,11 +5,27 @@ import {
     StyleSheet
 } from 'react-native'
 
-const ColorInfo = ({ navigation }) => (
-    <View style={styles.container} >
-        <Text style={styles.text}>{ navigation.state.params.color }</Text>
-    </ View>
-)
+import ColorTools from 'color'
+
+const ColorInfo = ({ navigation }) => {
+    const colorClickedOn = ColorTools(navigation.state.params.color)
+    return (
+        <View style={[styles.container, { backgroundColor: colorClickedOn }]} >
+            <Text style={[styles.text, { color: colorClickedOn.negate() }]}>
+                Ways to write { navigation.state.params.color }:
+            </Text>
+            <Text style={[styles.text, { color: colorClickedOn.negate() }]}>
+                {colorClickedOn.hex()}
+            </Text>
+            <Text style={[styles.text, { color: colorClickedOn.negate() }]}>
+                {colorClickedOn.rgb().string()}
+            </Text>
+            <Text style={[styles.text, { color: colorClickedOn.negate() }]}>
+                {colorClickedOn.hsl().string()}
+            </Text>
+        </ View>
+    )
+}
 
 ColorInfo.navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.color
