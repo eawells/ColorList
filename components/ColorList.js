@@ -82,7 +82,8 @@ export default class ColorList extends React.Component {
           onSelect={() => navigate('Details', {color})}/> // {color} is a params obj allows us to pass color to the details screen. In the past, would be written { color: color }
         )}
         renderHeader={() => (
-          <ColorForm onNewColor={this.newColor}/>
+          <ColorForm onNewColor={this.newColor}
+          navigation={this.props.navigation}/>
         )}>
 
       </ListView>
